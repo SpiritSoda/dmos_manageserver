@@ -1,0 +1,12 @@
+[submodule "src/main/java/com/dmos/dmos_manageserver/dmos_common"]
+	path = src/main/java/com/dmos/dmos_manageserver/dmos_common
+	url = https://github.com/SpiritSoda/dmos_common
+[submodule "src/main/java/com/dmos/dmos_manageserver/dmos_server"]
+	path = src/main/java/com/dmos/dmos_manageserver/dmos_server
+	url = https://github.com/SpiritSoda/dmos_server
+[submodule "src/main/java/com/dmos/dmos_common"]
+	path = src/main/java/com/dmos/dmos_common
+	url = https://github.com/SpiritSoda/dmos_common
+[submodule "src/main/java/com/dmos/dmos_server"]
+	path = src/main/java/com/dmos/dmos_server
+	url = https://github.com/SpiritSoda/dmos_server
