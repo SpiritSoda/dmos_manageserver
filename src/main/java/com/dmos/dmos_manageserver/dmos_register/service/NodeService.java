@@ -1,6 +1,6 @@
 package com.dmos.dmos_manageserver.dmos_register.service;
 
-import com.dmos.dmos_manageserver.dmos_register.dto.NodeDTO;
+import com.dmos.dmos_common.data.NodeDTO;
 import com.dmos.dmos_manageserver.dmos_register.entity.Node;
 import com.dmos.dmos_manageserver.dmos_register.repo.NodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,10 @@ public class NodeService {
         node.setType(nodeDTO.getType());
         node.setToken(nodeDTO.getToken());
         node.setIp(nodeDTO.getIp());
+        node.setInterval(nodeDTO.getInterval());
         return nodeRepository.save(node);
+    }
+    public Node findById(int id){
+        return nodeRepository.findNodeById(id);
     }
 }

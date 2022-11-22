@@ -1,7 +1,8 @@
 package com.dmos.dmos_manageserver.dmos_storage.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +11,14 @@ import javax.persistence.Table;
 
 //@Entity
 @Data
-//@Table(name = "info")
-public class Info {
+@Entity
+@Table(name = "state")
+@AllArgsConstructor
+@NoArgsConstructor
+public class State {
     @Id
-//    @NonNull
-    @Column(name = "client_id")
-    private int clientId;
+    @Column(name = "id")
+    private int id;
     // 内存
     private double mem;
     // CPU

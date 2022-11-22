@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dmos.dmos_manageserver.dmos_register.config.JwtConfig;
-import com.dmos.dmos_manageserver.dmos_register.dto.NodeDTO;
+import com.dmos.dmos_common.data.NodeDTO;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
