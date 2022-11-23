@@ -1,5 +1,6 @@
 package com.dmos.dmos_manageserver.dmos_register.service;
 
+import com.dmos.dmos_common.data.ConfigDTO;
 import com.dmos.dmos_common.data.NodeDTO;
 import com.dmos.dmos_manageserver.dmos_register.entity.Node;
 import com.dmos.dmos_manageserver.dmos_register.repo.NodeRepository;
@@ -31,5 +32,17 @@ public class NodeService {
     }
     public Node findById(int id){
         return nodeRepository.findNodeById(id);
+    }
+    public void config(ConfigDTO configDTO){
+        if(configDTO.getId() == 0)
+            return;
+        Node node = nodeRepository.findNodeById(configDTO.getId());
+        if(node == null)
+            return;
+        if(configDTO.getInterval() > 0)
+            node.setInterval(configDTO.getInterval());
+        if(configDTO.getIp() != null)
+            node.setIp(configDTO.getIp());
+        nodeRepository.save(node);
     }
 }

@@ -1,14 +1,12 @@
 package com.dmos.dmos_manageserver.dmos_register.handler;
 
-import com.dmos.dmos_common.data.ClientReportDTO;
 import com.dmos.dmos_common.data.ServerReportDTO;
 import com.dmos.dmos_common.message.Message;
 import com.dmos.dmos_common.message.MessageType;
 import com.dmos.dmos_manageserver.bean.SpringUtil;
-import com.dmos.dmos_manageserver.dmos_register.component.DMOSRegisterContext;
 import com.dmos.dmos_manageserver.dmos_register.config.JwtConfig;
 import com.dmos.dmos_manageserver.dmos_register.util.JwtUtils;
-import com.dmos.dmos_manageserver.dmos_register.util.RegisterReport;
+import com.dmos.dmos_server.tree.ReportChangeLog;
 import com.dmos.dmos_server.DMOSServerContext;
 import com.google.gson.Gson;
 import io.netty.channel.ChannelHandler;
@@ -17,12 +15,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.util.stream.Collectors;
-
 @Slf4j
 @ChannelHandler.Sharable
 public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
-    private final DMOSRegisterContext registerContext = SpringUtil.getBean(DMOSRegisterContext.class);
     private final DMOSServerContext serverContext = SpringUtil.getBean(DMOSServerContext.class);
     private final JwtConfig jwtConfig = SpringUtil.getBean(JwtConfig.class);
     @Override
@@ -52,7 +47,7 @@ public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
         }
         else if(message.getType() == MessageType.SERVER_REPORT){
             ServerReportDTO reportDTO = gson.fromJson(message.getData(), ServerReportDTO.class);
-            RegisterReport report = registerContext.report(reportDTO);
+            ReportChangeLog changeLog = serverContext.report(reportDTO);
             // ==================================== report to user ==================================== //
         }
     }
@@ -74,13 +69,5 @@ public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
         log.info("正在检查心跳");
         serverContext.disconnectTimeout();
         serverContext.resetHeartbeat();
-    }
-    @Scheduled(fixedRate = 10000)
-    public void reportChild(){
-        log.info("正在更新子节点信息");
-        ServerReportDTO reportDTO = new ServerReportDTO();
-        reportDTO.setChild(serverContext.getClients().stream().collect(Collectors.toList()));
-        reportDTO.setId(0);
-        registerContext.report(reportDTO);
     }
 }
