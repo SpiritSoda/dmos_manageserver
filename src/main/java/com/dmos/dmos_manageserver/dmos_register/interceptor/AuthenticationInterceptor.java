@@ -28,7 +28,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             throw new NoTokenException("Token not found ...");
         }
 
-        // logger.info("认证 {}", token);
+//        logger.info("认证 {}", token);
         Map<String, Claim> verify = JwtUtils.parse(token, jwtConfig);
         return true;
     }

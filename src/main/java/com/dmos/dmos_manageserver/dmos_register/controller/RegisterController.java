@@ -33,9 +33,11 @@ public class RegisterController {
     @PostMapping("/api/register/register")
     public DMOSResponse register(@RequestBody @Valid DMOSRequest dmosRequest){
         NodeDTO nodeDTO = ParseUtil.parse(dmosRequest.getData().get("info"), NodeDTO.class);
-//        log.info("Registering: " + nodeDTO.toString());
+        log.info("Registering: " + nodeDTO.toString());
         if(nodeDTO.getInterval() == 0)
             return DMOSResponse.buildFailsResponse("必须设置报告间隔interval", null);
+        if(nodeDTO.getType() == 0)
+            return DMOSResponse.buildFailsResponse("必须设置客户端类型", null);
         Node node = nodeService.register();
         if(nodeDTO.getName() == null)
             nodeDTO.setName("Machine " + nodeDTO.getId());
@@ -57,8 +59,10 @@ public class RegisterController {
     @PostMapping("/api/register/token")
     public DMOSResponse token(HttpServletRequest request){
         String token = request.getHeader("token");
+        log.info(token);
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", JwtUtils.sign(token, jwtConfig));
+        data.put("id", JwtUtils.parse(token, jwtConfig).get("id").asInt());
         // id token
         return DMOSResponse.buildSuccessResponse(data);
     }

@@ -4,6 +4,7 @@ import com.dmos.dmos_common.data.ServerReportDTO;
 import com.dmos.dmos_common.message.Message;
 import com.dmos.dmos_common.message.MessageType;
 import com.dmos.dmos_manageserver.bean.SpringUtil;
+import com.dmos.dmos_manageserver.dmos_register.component.DMOSWebService;
 import com.dmos.dmos_manageserver.dmos_register.config.JwtConfig;
 import com.dmos.dmos_manageserver.dmos_register.util.JwtUtils;
 import com.dmos.dmos_server.tree.ReportChangeLog;
@@ -20,6 +21,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
     private final DMOSServerContext serverContext = SpringUtil.getBean(DMOSServerContext.class);
     private final JwtConfig jwtConfig = SpringUtil.getBean(JwtConfig.class);
+    private final DMOSWebService webService = SpringUtil.getBean(DMOSWebService.class);
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("子节点通道已建立: {}", ctx.channel().id().asLongText());
@@ -49,6 +52,7 @@ public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
             ServerReportDTO reportDTO = gson.fromJson(message.getData(), ServerReportDTO.class);
             ReportChangeLog changeLog = serverContext.report(reportDTO);
             // ==================================== report to user ==================================== //
+            webService.reportOnlineOffline(changeLog);
         }
     }
     @Override
