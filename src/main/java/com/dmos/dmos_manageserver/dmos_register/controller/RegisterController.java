@@ -2,6 +2,7 @@ package com.dmos.dmos_manageserver.dmos_register.controller;
 
 import com.dmos.dmos_common.data.DMOSRequest;
 import com.dmos.dmos_common.data.DMOSResponse;
+import com.dmos.dmos_common.data.NodeType;
 import com.dmos.dmos_common.util.ParseUtil;
 import com.dmos.dmos_manageserver.dmos_register.config.JwtConfig;
 import com.dmos.dmos_common.data.NodeDTO;
@@ -40,7 +41,7 @@ public class RegisterController {
             return DMOSResponse.buildFailsResponse("必须设置客户端类型", null);
         Node node = nodeService.register();
         if(nodeDTO.getName() == null)
-            nodeDTO.setName("Machine " + node.getId());
+            nodeDTO.setName(nodeDTO.getType() == NodeType.SERVER ? "Server " : "Machine " + node.getId());
         if(nodeDTO.getIp() == null)
             nodeDTO.setIp("unset");
         nodeDTO.setId(node.getId());

@@ -28,7 +28,6 @@ public class STOMPConfig implements WebSocketMessageBrokerConfigurer {
         //连接前缀
         registry.addEndpoint("/dmos_app")
                 .setAllowedOrigins("*")  // 跨域处理
-                .addInterceptors(createSessionInterceptor())
                 .withSockJS();  //支持socketJs
     }
     @Bean

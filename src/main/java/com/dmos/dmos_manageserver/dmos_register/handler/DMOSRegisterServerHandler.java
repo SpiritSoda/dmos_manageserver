@@ -84,7 +84,8 @@ public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
         reportDTO.setChild(serverContext.getClients().stream().collect(Collectors.toList()));
         reportDTO.setId(0);
         reportDTO.setTimestamp(System.currentTimeMillis() / 1000L);
-        serverContext.report(reportDTO);
+        ReportChangeLog changeLog = serverContext.report(reportDTO);
+        webService.reportOnlineOffline(changeLog);
     }
 
 }
