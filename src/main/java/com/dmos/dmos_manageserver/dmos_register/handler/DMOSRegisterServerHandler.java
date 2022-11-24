@@ -68,10 +68,4 @@ public class DMOSRegisterServerHandler extends ChannelInboundHandlerAdapter {
         serverContext.deleteChannel(ctx.channel().id().asLongText());
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void checkHeartbeat() throws InterruptedException {
-        log.info("正在检查心跳");
-        serverContext.disconnectTimeout();
-        serverContext.resetHeartbeat();
-    }
 }

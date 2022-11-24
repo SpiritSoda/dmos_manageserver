@@ -5,6 +5,7 @@ import com.dmos.dmos_common.data.DMOSResponse;
 import com.dmos.dmos_manageserver.dmos_web.component.RegisterService;
 import com.dmos.dmos_manageserver.dmos_web.component.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,20 +25,20 @@ public class WebController {
         this.registerService = registerService;
     }
 
-    @PostMapping("/api/web/queryState")
+    @PostMapping("/api/getNodeList")
     public DMOSResponse queryState(@RequestBody @Valid DMOSRequest dmosRequest){
         return storageService.queryState(dmosRequest);
     }
-    @PostMapping("/api/web/queryInfo")
+    @PostMapping("/api/getNodeInfo")
     public DMOSResponse queryInfo(@RequestBody @Valid DMOSRequest dmosRequest){
         return registerService.queryInfo(dmosRequest);
     }
-    @PostMapping("/api/web/queryStructure")
-    public DMOSResponse queryStructure(@RequestBody @Valid DMOSRequest dmosRequest){
+    @GetMapping("/api/getTreeDiagram")
+    public DMOSResponse queryStructure(){
         return registerService.queryStructure();
     }
-    @PostMapping("/api/web/config")
-    public DMOSResponse queryConfig(@RequestBody @Valid DMOSRequest dmosRequest){
+    @PostMapping("/api/configure")
+    public DMOSResponse config(@RequestBody @Valid DMOSRequest dmosRequest){
         return registerService.config(dmosRequest);
     }
 }

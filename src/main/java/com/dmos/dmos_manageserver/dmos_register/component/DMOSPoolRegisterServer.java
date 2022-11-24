@@ -1,9 +1,13 @@
 package com.dmos.dmos_manageserver.dmos_register.component;
 
 import com.dmos.dmos_common.util.Port;
+import com.dmos.dmos_manageserver.bean.SpringUtil;
 import com.dmos.dmos_manageserver.dmos_register.config.ThreadPoolTaskConfig;
 import com.dmos.dmos_manageserver.dmos_register.handler.DMOSRegisterServerHandler;
 import com.dmos.dmos_server.DMOSServer;
+import com.dmos.dmos_server.DMOSServerContext;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +15,9 @@ import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 @Component
+@Slf4j
 public class DMOSPoolRegisterServer {
+    private final DMOSServerContext serverContext = SpringUtil.getBean(DMOSServerContext.class);
     @Resource
     private ThreadPoolTaskConfig poolTaskExecutor;
     private static DMOSPoolRegisterServer single = null;
@@ -50,5 +56,11 @@ public class DMOSPoolRegisterServer {
     public boolean getIsRunning(){
         if(server == null){return false;}
         return  server.isRunning;
+    }
+    @Scheduled(fixedRate = 60000)
+    public void checkHeartbeat() throws InterruptedException {
+        log.info("正在检查心跳");
+        serverContext.disconnectTimeout();
+        serverContext.resetHeartbeat();
     }
 }

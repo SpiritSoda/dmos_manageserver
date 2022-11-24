@@ -10,11 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class AuthConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(createAuthenticationInterceptor())
-//                .addPathPatterns("/api/**")
-//                .excludePathPatterns("/api/register/register")
-//                .excludePathPatterns("/api/storage/**")
-//                .excludePathPatterns("/api/web/**");
+        registry.addInterceptor(createAuthenticationInterceptor())
+                .addPathPatterns("/register/**")
+                .addPathPatterns("/storage/**")
+                .excludePathPatterns("/api/register/register");
     }
     @Bean
     public AuthenticationInterceptor createAuthenticationInterceptor(){

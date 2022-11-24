@@ -18,15 +18,20 @@ public class StateService {
     public void update(ClientReportDTO reportDTO){
         State state = new State(
                 reportDTO.getId(),
-                reportDTO.getMem(),
-                reportDTO.getCpu(),
-                reportDTO.getDisk(),
-                reportDTO.getTemperature(),
-                reportDTO.getOS()
+                reportDTO.getRam().getPercent(),
+                reportDTO.getRam().getUsed(),
+                reportDTO.getRam().getTotal(),
+                reportDTO.getCpu().getPercent(),
+                reportDTO.getCpu().getUsed(),
+                reportDTO.getCpu().getTotal(),
+                reportDTO.getStorage().getPercent(),
+                reportDTO.getStorage().getUsed(),
+                reportDTO.getStorage().getTotal(),
+                reportDTO.getTimestamp()
         );
         stateRepository.save(state);
     }
     public State findById(int id){
-        return stateRepository.findInfoById(id);
+        return stateRepository.findStateById(id);
     }
 }

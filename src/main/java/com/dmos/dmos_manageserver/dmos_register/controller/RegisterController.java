@@ -30,7 +30,7 @@ public class RegisterController {
         this.jwtConfig = jwtConfig;
     }
 
-    @PostMapping("/api/register/register")
+    @PostMapping("/register/register")
     public DMOSResponse register(@RequestBody @Valid DMOSRequest dmosRequest){
         NodeDTO nodeDTO = ParseUtil.parse(dmosRequest.getData().get("info"), NodeDTO.class);
         log.info("Registering: " + nodeDTO.toString());
@@ -56,17 +56,17 @@ public class RegisterController {
         return DMOSResponse.buildSuccessResponse(data);
     }
 
-    @PostMapping("/api/register/token")
+    @PostMapping("/register/token")
     public DMOSResponse token(HttpServletRequest request){
         String token = request.getHeader("token");
-        log.info(token);
+//        log.info(token);
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", JwtUtils.sign(token, jwtConfig));
         data.put("id", JwtUtils.parse(token, jwtConfig).get("id").asInt());
         // id token
         return DMOSResponse.buildSuccessResponse(data);
     }
-    @PostMapping("/api/register/verify")
+    @PostMapping("/register/verify")
     public DMOSResponse verify(@RequestBody @Valid DMOSRequest dmosRequest){
         int id = JwtUtils.verify((String) dmosRequest.getData().get("token"), jwtConfig);
         HashMap<String, Object> data = new HashMap<>();
