@@ -6,12 +6,14 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dmos.dmos_manageserver.dmos_register.config.JwtConfig;
 import com.dmos.dmos_common.data.NodeDTO;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 
+@Slf4j
 public class JwtUtils {
     public static String sign(NodeDTO user, JwtConfig jwtConfig){
         String token = null;
@@ -50,7 +52,7 @@ public class JwtUtils {
     public static int verify(String token, JwtConfig jwtConfig){
         Map<String, Claim> claims = parse(token, jwtConfig);
         String machineToken = claims.get("token").asString();
-        Map<String, Claim> machineClaims = parse(machineToken, new JwtConfig());
+        Map<String, Claim> machineClaims = parse(machineToken, jwtConfig);
         int id = machineClaims.get("id").asInt();
         long time_exceed = claims.get("timestamp").asLong() + jwtConfig.getExceed();
         if(System.currentTimeMillis() > time_exceed)
