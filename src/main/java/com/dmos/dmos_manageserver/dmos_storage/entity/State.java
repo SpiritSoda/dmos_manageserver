@@ -39,6 +39,8 @@ public class State {
     private long timestamp;
 
     public static ClientReportDTO toDTO(State state){
+        if(state == null)
+            return new ClientReportDTO();
         ClientReportDTO reportDTO = new ClientReportDTO();
         reportDTO.setId(state.getId());
         reportDTO.setRam(new Ram(state.ram_percent, state.ram_used, state.ram_total));
