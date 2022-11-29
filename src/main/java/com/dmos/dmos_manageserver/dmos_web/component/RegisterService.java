@@ -57,7 +57,7 @@ public class RegisterService {
         Message message = new Message();
         message.setType(MessageType.CONFIG);
         message.setData(ParseUtil.encode(configDTO, false));
-        serverContext.sendTo(configDTO.getId(), message);
+        serverContext.sendToWithoutFlush(configDTO.getId(), message);
         return DMOSResponse.buildSuccessResponse(null);
     }
 }
