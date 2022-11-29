@@ -17,7 +17,7 @@ public class DMOSBean {
     }
     @Bean
     public static DMOSConfig dmosConfig(){
-        return ConfigUtil.load("config.json");
+        return ConfigUtil.load("config.json", DMOSConfig.class);
     }
     @ConditionalOnMissingBean(RestTemplate.class)
     @Bean

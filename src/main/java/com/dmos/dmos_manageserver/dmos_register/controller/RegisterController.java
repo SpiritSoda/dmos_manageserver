@@ -40,9 +40,9 @@ public class RegisterController {
         if(nodeDTO.getType() == 0)
             return DMOSResponse.buildFailsResponse("必须设置客户端类型", null);
         Node node = nodeService.register();
-        if(nodeDTO.getName() == null)
+        if(nodeDTO.getName() == null || nodeDTO.getName().isEmpty())
             nodeDTO.setName(nodeDTO.getType() == NodeType.SERVER ? "Server " : "Machine " + node.getId());
-        if(nodeDTO.getIp() == null)
+        if(nodeDTO.getIp() == null || nodeDTO.getIp().isEmpty())
             nodeDTO.setIp("unset");
         nodeDTO.setId(node.getId());
         String token = JwtUtils.sign(nodeDTO, jwtConfig);
