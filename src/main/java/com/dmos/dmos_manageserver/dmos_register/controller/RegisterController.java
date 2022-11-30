@@ -41,7 +41,7 @@ public class RegisterController {
             return DMOSResponse.buildFailsResponse("必须设置客户端类型", null);
         Node node = nodeService.register();
         if(nodeDTO.getName() == null || nodeDTO.getName().isEmpty())
-            nodeDTO.setName(nodeDTO.getType() == NodeType.SERVER ? "Server " : "Machine " + node.getId());
+            nodeDTO.setName(nodeDTO.getType() == NodeType.SERVER ? "Server " + node.getId() : "Machine " + node.getId());
         if(nodeDTO.getIp() == null || nodeDTO.getIp().isEmpty())
             nodeDTO.setIp("unset");
         nodeDTO.setId(node.getId());
