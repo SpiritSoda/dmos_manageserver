@@ -1,5 +1,6 @@
 package com.dmos.dmos_manageserver.dmos_register.component;
 
+import com.dmos.dmos_common.config.DMOSConfig;
 import com.dmos.dmos_common.util.Port;
 import com.dmos.dmos_manageserver.bean.SpringUtil;
 import com.dmos.dmos_manageserver.dmos_register.config.ThreadPoolTaskConfig;
@@ -18,6 +19,7 @@ import java.net.InetSocketAddress;
 @Slf4j
 public class DMOSPoolRegisterServer {
     private final DMOSServerContext serverContext = SpringUtil.getBean(DMOSServerContext.class);
+    private final DMOSConfig dmosConfig = SpringUtil.getBean(DMOSConfig.class);
     @Resource
     private ThreadPoolTaskConfig poolTaskExecutor;
     private static DMOSPoolRegisterServer single = null;
@@ -41,7 +43,7 @@ public class DMOSPoolRegisterServer {
             public void run() {
                 //启动服务端
                 System.out.println("DMOSPoolRegisterServer当前线程池：" + Thread.currentThread().getName());
-                DMOSServer server = new DMOSServer(new InetSocketAddress("127.0.0.1", Port.REGISTER_CHANNEL_PORT), new DMOSRegisterServerHandler());
+                DMOSServer server = new DMOSServer(new InetSocketAddress(dmosConfig.getLocalhost(), Port.REGISTER_CHANNEL_PORT), new DMOSRegisterServerHandler());
                 server.start();
             }
         });

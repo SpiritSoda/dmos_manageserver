@@ -1,6 +1,7 @@
 {
+  "localToken": "",
+  "socketIP": "127.0.0.1:",
   "register": "127.0.0.1",
-  "data": "127.0.0.1",
-  "parent": "127.0.0.1",
+  "storage": "127.0.0.1",
   "localhost": "127.0.0.1"
 }
