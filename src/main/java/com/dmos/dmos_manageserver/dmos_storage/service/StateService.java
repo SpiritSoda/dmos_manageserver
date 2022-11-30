@@ -16,19 +16,7 @@ public class StateService {
     }
 
     public void update(ClientReportDTO reportDTO){
-        State state = new State(
-                reportDTO.getId(),
-                reportDTO.getRam().getPercent(),
-                reportDTO.getRam().getUsed(),
-                reportDTO.getRam().getTotal(),
-                reportDTO.getCpu().getPercent(),
-                reportDTO.getCpu().getUsed(),
-                reportDTO.getCpu().getTotal(),
-                reportDTO.getStorage().getPercent(),
-                reportDTO.getStorage().getUsed(),
-                reportDTO.getStorage().getTotal(),
-                reportDTO.getTimestamp()
-        );
+        State state = State.fromDTO(reportDTO);
         stateRepository.save(state);
     }
     public State findById(int id){
